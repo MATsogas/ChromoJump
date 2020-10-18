@@ -661,10 +661,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2021518382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6d9b5055ed16c8488582633b5ddbab2, type: 3}
+  m_Script: {fileID: 11500000, guid: 2ceecae99428988418af81174f23266a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  board: {fileID: 2021518382}
   tileRow: {fileID: 3224121239214678722, guid: ea2f328ebd99b5741974dcb7ebb72b8d, type: 3}
   tile: {fileID: 1552687230367354560, guid: 51241ecab35dc3d49aadca85cf77fa56, type: 3}
   player: {fileID: 328362667025157580, guid: 4e1199ee7d07ee749b3a8c2f1e081235, type: 3}

@@ -50,9 +50,15 @@ public class PlayerControler : MonoBehaviour
                 gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, tileToMoveTo.transform.position, step);
             } else // Player landed on tile
             {
+                // Find the colors of the player's core and the tile we landed on
+                Color tileLandedColor = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color");
+                Color playerCoreColor = playerCore.GetComponent<Renderer>().material.GetColor("_Color");
+
+                gameObject.transform.parent.GetComponent<GameMaster>().AwardScoreCalculator(playerCoreColor, tileLandedColor); // Update score
+
                 playerCore.GetComponent<Renderer>().material.color = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color"); // Change the color of the player's core to the tile's we just landed on
                 tileToMoveTo.GetComponent<RandomColor>().PaintTileRandomColor(); // Change the tile's color
-                //gameObject.transform.parent.gameObject.GetComponent<GameMaster>().ChangeTileColor(tileToMoveTo); // Change the color of the tile player landed on
+
                 tileToMoveTo = null; // Reset tileToMoveTo
             }
         }

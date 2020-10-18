@@ -34,16 +34,15 @@ public class GameMaster : MonoBehaviour
         Instantiate(player, new Vector3(boardPosX + (2 * 1.2f * rowScaleX), boardPosY + (3 * -0.95f), 9f), Quaternion.Euler(new Vector3(90, 0, 0)), gameObject.transform);
     }
 
-    public void ChangeTileColor()
+    public int AwardScoreCalculator(Color playerCoreColor, Color tileColor)
     {
-        Debug.Log("Changing tile color");
-        RaycastHit hit;
-        if (Physics.Raycast(player.transform.position, player.transform.up, out hit))
-            if (hit.collider.gameObject.GetComponent<RandomColor>() != null) {
-                hit.collider.gameObject.GetComponent<RandomColor>().PaintTileRandomColor();
-            } else
-            {
-                Debug.Log("Tile not found");
-            }
+        // Change colors to Vector3s
+        Vector3 playerCoreV3 = (Vector4)(playerCoreColor);
+        Vector3 tileV3 = (Vector4)(tileColor);
+        // Calculate distance and return the resulting score
+        float distance = Mathf.Abs(Vector3.Distance(playerCoreV3, tileV3));
+        int scoreAwarded = Mathf.RoundToInt(200 * (Mathf.Sqrt(3) - distance) / Mathf.Sqrt(3)) * 5;
+        Debug.Log(scoreAwarded);
+        return scoreAwarded;
     }
 }
