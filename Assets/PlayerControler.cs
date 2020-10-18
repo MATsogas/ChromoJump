@@ -50,7 +50,8 @@ public class PlayerControler : MonoBehaviour
                 gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, tileToMoveTo.transform.position, step);
             } else // Player landed on tile
             {
-                playerCore.GetComponent<Renderer>().material.color = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color");
+                playerCore.GetComponent<Renderer>().material.color = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color"); // Change the color of the player's core to the tile's we just landed on
+                tileToMoveTo.GetComponent<RandomColor>().PaintTileRandomColor(); // Change the tile's color
                 //gameObject.transform.parent.gameObject.GetComponent<GameMaster>().ChangeTileColor(tileToMoveTo); // Change the color of the tile player landed on
                 tileToMoveTo = null; // Reset tileToMoveTo
             }
