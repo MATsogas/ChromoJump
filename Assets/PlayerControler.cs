@@ -9,7 +9,7 @@ public class PlayerControler : MonoBehaviour
     
     private GameObject playerCore;
 
-    private Queue<GameObject> movementQueue = new Queue<GameObject>();
+    private Queue<GameObject> movementQueue = new Queue<GameObject>(); // In case the user clicks on another tile before the player lands
     private GameObject tileToMoveTo;
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class PlayerControler : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit)) 
             {             
-                Debug.Log("Clicked on: " + hit.collider.gameObject.name + ". (Color: " + hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color") + "), Position: " + hit.collider.gameObject.transform.position + ")");
+                // Debug.Log("Clicked on: " + hit.collider.gameObject.name + ". (Color: " + hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color") + "), Position: " + hit.collider.gameObject.transform.position + ")");
                 movementQueue.Enqueue(hit.collider.gameObject);
             }
         }
@@ -37,20 +37,22 @@ public class PlayerControler : MonoBehaviour
         if (movementQueue.Any() && tileToMoveTo == null)
         {
             tileToMoveTo = movementQueue.Dequeue();
-            Debug.Log("Moving to " + tileToMoveTo.transform.position);
+            // Debug.Log("Moving to " + tileToMoveTo.transform.position);
         }
 
         // Move to next tile if available
         if (tileToMoveTo != null)
         {
-            if (Vector2.Distance(tileToMoveTo.transform.position, transform.position)>=0.01)
+            if (Vector2.Distance(tileToMoveTo.transform.position, transform.position)>=0.01) // Player is too far from tile (a.k.a. player hasn't landed on a tile yet)
             {
+                // Move towards tile
                 float step = playerSpeed * Time.deltaTime;
                 gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, tileToMoveTo.transform.position, step);
-            } else
+            } else // Player landed on tile
             {
-                CorePainter();
-                tileToMoveTo = null;
+                playerCore.GetComponent<Renderer>().material.color = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color");
+                //gameObject.transform.parent.gameObject.GetComponent<GameMaster>().ChangeTileColor(tileToMoveTo); // Change the color of the tile player landed on
+                tileToMoveTo = null; // Reset tileToMoveTo
             }
         }
     }
