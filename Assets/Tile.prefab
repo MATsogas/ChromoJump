@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5911149571565764119}
   - component: {fileID: 7993408009328687205}
   - component: {fileID: 4689388508166778909}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,4 +106,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29950c583ac60b45b17b32dd6581950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 1552687230367354560}

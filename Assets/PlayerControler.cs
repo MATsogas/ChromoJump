@@ -25,8 +25,11 @@ public class PlayerControler : MonoBehaviour
         // Add on a queue the tiles that are clicked
         if (Input.GetButtonDown("Fire1"))
         {
+            // Bit shift the index of the "Tiles" layer (layer 8) to get a bit mask
+            int tilesLayerMask = 1 << 8;
+
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit)) 
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, tilesLayerMask)) 
             {             
                 // Debug.Log("Clicked on: " + hit.collider.gameObject.name + ". (Color: " + hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color") + "), Position: " + hit.collider.gameObject.transform.position + ")");
                 movementQueue.Enqueue(hit.collider.gameObject);
