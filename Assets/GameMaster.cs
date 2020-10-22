@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class GameMaster : MonoBehaviour
     public GameObject tileRow;
     public GameObject tile;
     public GameObject player;
+    public Text score;
+
+    private int curScore;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +36,13 @@ public class GameMaster : MonoBehaviour
 
         // Spawn Player in center tile of 7x5 Board
         Instantiate(player, new Vector3(boardPosX + (2 * 1.2f * rowScaleX), boardPosY + (3 * -0.95f), 9f), Quaternion.Euler(new Vector3(90, 0, 0)), gameObject.transform);
+
+        // Set score to 0
+        curScore = 0;
+        SetScore(curScore);
     }
 
-    public int AwardScoreCalculator(Color playerCoreColor, Color tileColor)
+    private int AwardScoreCalculator(Color playerCoreColor, Color tileColor)
     {
         // Change colors to Vector3s
         Vector3 playerCoreV3 = (Vector4)(playerCoreColor);
@@ -42,7 +50,17 @@ public class GameMaster : MonoBehaviour
         // Calculate distance and return the resulting score
         float distance = Mathf.Abs(Vector3.Distance(playerCoreV3, tileV3));
         int scoreAwarded = Mathf.RoundToInt(200 * (Mathf.Sqrt(3) - distance) / Mathf.Sqrt(3)) * 5;
-        Debug.Log(scoreAwarded);
         return scoreAwarded;
+    }
+
+    public void AwardScore(Color playerCoreColor, Color tileColor)
+    {
+        curScore += AwardScoreCalculator(playerCoreColor, tileColor);
+        SetScore(curScore);
+    }
+
+    private void SetScore(int newScore)
+    {
+        score.text = "Score: " + newScore;
     }
 }
