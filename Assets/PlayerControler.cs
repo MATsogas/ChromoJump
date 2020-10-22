@@ -31,6 +31,7 @@ public class PlayerControler : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, tilesLayerMask)) 
             {             
+                if (Vector2.Distance(hit.collider.gameObject.transform.position, transform.position) >= 0.01)
                 // Debug.Log("Clicked on: " + hit.collider.gameObject.name + ". (Color: " + hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color") + "), Position: " + hit.collider.gameObject.transform.position + ")");
                 movementQueue.Enqueue(hit.collider.gameObject);
             }
