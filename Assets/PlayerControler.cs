@@ -12,11 +12,14 @@ public class PlayerControler : MonoBehaviour
     private Queue<GameObject> movementQueue = new Queue<GameObject>(); // In case the user clicks on another tile before the player lands
     private GameObject tileToMoveTo;
 
+    private Vector3 lastPlayerPosition = new Vector3(); // Used to detect player motion
+
     // Start is called before the first frame update
     void Start()
     {
         playerCore = gameObject.transform.Find("Player Core").gameObject; // Find player's core (child GameObject named "Player Core")
         CorePainter();
+        lastPlayerPosition = gameObject.transform.position;
     }
 
     // Update is called once per frame
@@ -30,10 +33,11 @@ public class PlayerControler : MonoBehaviour
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, tilesLayerMask)) 
-            {             
-                if (Vector2.Distance(hit.collider.gameObject.transform.position, transform.position) >= 0.01)
-                // Debug.Log("Clicked on: " + hit.collider.gameObject.name + ". (Color: " + hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color") + "), Position: " + hit.collider.gameObject.transform.position + ")");
-                movementQueue.Enqueue(hit.collider.gameObject);
+            {
+                bool isPlayerMoving = lastPlayerPosition == gameObject.transform.position;
+                bool isPlayerOnTopOfTile = !isPlayerMoving && (Vector2.Distance(hit.collider.gameObject.transform.position, gameObject.transform.position) < 0.01); // Player is "standing" on tile if it's motionless AND close enough to said tile
+                if (isPlayerMoving || isPlayerOnTopOfTile)
+                    movementQueue.Enqueue(hit.collider.gameObject);
             }
         }
 
@@ -66,6 +70,8 @@ public class PlayerControler : MonoBehaviour
                 tileToMoveTo = null; // Reset tileToMoveTo
             }
         }
+
+        lastPlayerPosition = gameObject.transform.position;
     }
 
     // Function that changes the color of the player's core to what tile they're "standing" on
