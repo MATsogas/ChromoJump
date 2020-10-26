@@ -8,13 +8,25 @@ public class GameOverScreenController : MonoBehaviour
 {
     public Text score;
 
-    public void Start()
+    void Start()
     {
-        score.text = "Score: " + PlayerPrefs.GetInt("gameScore");
+        int gameScore = PlayerPrefs.GetInt("gameScore");
+        score.text = "Score: " + gameScore;
+        int highScore = PlayerPrefs.GetInt("highScore");
+        if (highScore < gameScore)
+        {
+            // New High Score!
+            PlayerPrefs.SetInt("highScore", gameScore);
+        }
     }
 
     public void Replay()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }

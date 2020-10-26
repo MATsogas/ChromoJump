@@ -2,9 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
+    public Text highScore;
+    private int highScoreValue;
+
+    void Start()
+    {
+        highScoreValue = PlayerPrefs.GetInt("highScore", 0);
+        if (highScoreValue > 0)
+            highScore.text = "High Score: " + highScoreValue;
+    }
+
     // Start Game
     public void PlayGame()
     {
