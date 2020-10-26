@@ -10,8 +10,10 @@ public class GameMaster : MonoBehaviour
     public GameObject tile;
     public GameObject player;
     public Text score;
+    public Text moves;
 
     private int curScore;
+    private int curMoves;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +42,10 @@ public class GameMaster : MonoBehaviour
         // Set score to 0
         curScore = 0;
         SetScore(curScore);
+
+        // Set moves to 12
+        curMoves = 12;
+        SetMoves(curMoves);
     }
 
     private int AwardScoreCalculator(Color playerCoreColor, Color tileColor)
@@ -59,8 +65,26 @@ public class GameMaster : MonoBehaviour
         SetScore(curScore);
     }
 
+    public void MoveMade()
+    {
+        if (curMoves >= 0)
+        {
+            curMoves -= 1;
+            SetMoves(curMoves);
+        } else
+        {
+            // Game Over
+            Debug.Log("Game Over");
+        }
+    }
+
     private void SetScore(int newScore)
     {
         score.text = "Score: " + newScore;
+    }
+
+    private void SetMoves(int newMoves)
+    {
+        moves.text = "Moves Left: " + newMoves;
     }
 }
