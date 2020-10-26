@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameMaster : MonoBehaviour
@@ -68,20 +67,15 @@ public class GameMaster : MonoBehaviour
 
     public void MoveMade()
     {
-        if (curMoves > 1)
+        if (curMoves >= 0)
         {
             curMoves -= 1;
             SetMoves(curMoves);
         } else
         {
-            GameOver();
+            // Game Over
+            Debug.Log("Game Over");
         }
-    }
-
-    private void GameOver()
-    {
-        PlayerPrefs.SetInt("gameScore", curScore);
-        SceneManager.LoadScene("GameOverScreenScene");
     }
 
     private void SetScore(int newScore)
