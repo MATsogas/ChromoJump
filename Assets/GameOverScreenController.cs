@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameOverScreenController : MonoBehaviour
 {
-    public Text score;
+    public TMP_Text score;
 
     void Start()
     {

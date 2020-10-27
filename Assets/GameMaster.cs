@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameMaster : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class GameMaster : MonoBehaviour
     public GameObject tileRow;
     public GameObject tile;
     public GameObject player;
-    public Text score;
-    public Text moves;
+    public TMP_Text score;
+    public TMP_Text moves;
 
     private int curScore;
     private int curMoves;
