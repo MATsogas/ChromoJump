@@ -61,17 +61,38 @@ public class GameMaster : MonoBehaviour
         return scoreAwarded;
     }
 
-    public void AwardScore(Color playerCoreColor, Color tileColor)
+    public void MoveMade(Color playerCoreColor, Color tileColor)
     {
-        curScore += AwardScoreCalculator(playerCoreColor, tileColor);
-        SetScore(curScore);
-    }
+        int score = AwardScoreCalculator(playerCoreColor, tileColor);
+        int mpChange = 0;
 
-    public void MoveMade()
-    {
-        if (curMoves > 1)
+        if (score < 620) // POOR (No score, Lose MP)
         {
-            curMoves -= 1;
+            curScore += 0;
+            mpChange = -1;
+        } else if (score < 741)
+        {
+            curScore += score / 2;
+            mpChange = -1;
+        } else if (score < 856) // GOOD (Full score, Lose MP)
+        {
+            curScore += score;
+            mpChange = -1;
+        } else if (score < 990) // GREAT (Full score, No MP loss)
+        {
+            curScore += score;
+            mpChange = 0;
+        } else if (score < 1001) // PERFECT (Full score, Gain MP)
+        {
+            curScore += score;
+            mpChange = 1;
+        } 
+
+        SetScore(curScore);
+
+        curMoves += mpChange;
+        if (curMoves > 0)
+        {
             SetMoves(curMoves);
         } else
         {
