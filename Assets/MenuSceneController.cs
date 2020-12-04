@@ -43,7 +43,7 @@ public class MenuSceneController : MonoBehaviour
     // Close Application
     public void ExitGame()
     {
-        UnityEditor.EditorApplication.isPlaying = false; // Stops app from running in the editor
+        //UnityEditor.EditorApplication.isPlaying = false; // Stops app from running in the editor
         Application.Quit();
     }
 }
