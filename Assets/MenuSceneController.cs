@@ -5,22 +5,39 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
-public class MainMenuController : MonoBehaviour
+public class MenuSceneController : MonoBehaviour
 {
-    public TMP_Text highScore;
+    public TMP_Text highScoreText;
     private int highScoreValue;
+
+    public GameObject mainMenu;
+    public GameObject tutorialMenu; 
 
     void Start()
     {
         highScoreValue = PlayerPrefs.GetInt("highScore", 0);
         if (highScoreValue > 0)
-            highScore.text = "High Score: " + highScoreValue;
+            highScoreText.text = "High Score: " + highScoreValue;
     }
 
     // Start Game
     public void PlayGame()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    // Show Tutorial
+    public void ShowTutorial()
+    {
+        tutorialMenu.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    // Go Back to Main Menu
+    public void BackToMainMenu()
+    {
+        mainMenu.SetActive(true);
+        tutorialMenu.SetActive(false);
     }
 
     // Close Application
