@@ -13,6 +13,9 @@ public class GameMaster : MonoBehaviour
     public GameObject player;
     public TMP_Text score;
     public TMP_Text moves;
+    public int rows = 7;
+    public int columns = 5;
+    public float tilesOffset = 1;
 
     private int curScore;
     private int curMoves;
@@ -27,19 +30,26 @@ public class GameMaster : MonoBehaviour
         // Get Rows' scale on X axis for later use
         float rowScaleX = tileRow.transform.localScale.x;
 
-        // Create 7x5 Board
-        for (int i = 0; i < 7; i++)
+        //Find Edges
+        float topEdge = tilesOffset * (rows / 2f - 0.5f);
+        float bottomEdge = topEdge * -1;
+        float rightEdge = tilesOffset * (columns / 2f - 0.5f);
+        float leftEdge = rightEdge * -1;
+
+        // Create Board
+        for (float curRow = bottomEdge; curRow <= topEdge; curRow+=tilesOffset)
         {
-            GameObject currentRow = Instantiate(tileRow, new Vector3(0, boardPosY + i * -0.95f, 9.5f), Quaternion.identity, gameObject.transform);
-            float currentRowYPos = currentRow.transform.position.y;
-            for (int j = 0; j < 5; j++)
+            GameObject currentRow = Instantiate(tileRow, gameObject.transform);
+            currentRow.transform.localPosition = new Vector3(0, curRow, 0);
+            for (float curTile = leftEdge; curTile <= rightEdge; curTile+=tilesOffset)
             {
-                Instantiate(tile, new Vector3(boardPosX + (j * 1.2f * rowScaleX), currentRowYPos, 9.5f), Quaternion.identity, currentRow.transform);
+                GameObject currentTile = Instantiate(tile, currentRow.transform);
+                currentTile.transform.localPosition = new Vector3(curTile, 0, 9.5f);
             }
         }
 
         // Spawn Player in center tile of 7x5 Board
-        Instantiate(player, new Vector3(boardPosX + (2 * 1.2f * rowScaleX), boardPosY + (3 * -0.95f), 9f), Quaternion.Euler(new Vector3(90, 0, 0)), gameObject.transform);
+        Instantiate(player, gameObject.transform);
 
         // Set score to 0
         curScore = 0;
