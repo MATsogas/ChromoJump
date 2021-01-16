@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
-    public float playerSpeed;
+    public float playerSpeed = 10;
+    public float playerRotateSpeed = 50;
     
     private GameObject playerCore;
 
@@ -25,6 +26,15 @@ public class PlayerControler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // -------- SPIN --------
+        gameObject.transform.Rotate(Vector3.forward * playerRotateSpeed * Time.deltaTime, Space.Self);
+
+        // -------- IDLE --------
+
+        //If player is not moving, hover
+
+        // -------- MOVEMENT --------
+
         // Add on a queue the tiles that are clicked
         if (Input.GetButtonDown("Fire1"))
         {
@@ -79,7 +89,7 @@ public class PlayerControler : MonoBehaviour
     void CorePainter()
     {
         RaycastHit hit;
-        if (Physics.Raycast(gameObject.transform.position, transform.up, out hit))
+        if (Physics.Raycast(gameObject.transform.position, transform.forward, out hit))
             playerCore.GetComponent<Renderer>().material.color = hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color");
     }
 }
