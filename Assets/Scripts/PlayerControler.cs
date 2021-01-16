@@ -29,10 +29,6 @@ public class PlayerControler : MonoBehaviour
         // -------- SPIN --------
         gameObject.transform.Rotate(Vector3.forward * playerRotateSpeed * Time.deltaTime, Space.Self);
 
-        // -------- IDLE --------
-
-        //If player is not moving, hover
-
         // -------- MOVEMENT --------
 
         // Add on a queue the tiles that are clicked
