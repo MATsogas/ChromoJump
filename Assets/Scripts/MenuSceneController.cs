@@ -11,13 +11,23 @@ public class MenuSceneController : MonoBehaviour
     private int highScoreValue;
 
     public GameObject mainMenu;
-    public GameObject tutorialMenu; 
+    public GameObject tutorialMenu;
+
+    private GameObject pages;
+    private Button nextPageButton;
+    private Button previousPageButton;
 
     void Start()
     {
+        // Get saved High Scored
         highScoreValue = PlayerPrefs.GetInt("highScore", 0);
         if (highScoreValue > 0)
             highScoreText.text = "High Score: " + highScoreValue;
+
+        // Initialise Pages
+        pages = tutorialMenu.transform.Find("Pages").gameObject;
+        nextPageButton = tutorialMenu.transform.Find("Next Button").gameObject.GetComponent<Button>();
+        previousPageButton = tutorialMenu.transform.Find("Previous Button").gameObject.GetComponent<Button>();
     }
 
     // Start Game
@@ -45,5 +55,19 @@ public class MenuSceneController : MonoBehaviour
     {
         //UnityEditor.EditorApplication.isPlaying = false; // Stops app from running in the editor
         Application.Quit();
+    }
+
+    // Switch to next tutorial page
+    public void NextPageTutorial()
+    {
+        previousPageButton.gameObject.SetActive(true);
+        nextPageButton.gameObject.SetActive(pages.GetComponent<PageHandler>().NextPage());
+    }
+
+    // Switch to previous tutorial page
+    public void PreviousPageTutorial ()
+    {
+        nextPageButton.gameObject.SetActive(true);
+        previousPageButton.gameObject.SetActive(pages.GetComponent<PageHandler>().PreviousPage());
     }
 }
