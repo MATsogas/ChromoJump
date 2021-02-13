@@ -48,7 +48,7 @@ public class GameMaster : MonoBehaviour
             }
         }
 
-        // Spawn Player in center tile of Board
+        // Spawn Player in center of the Board
         Instantiate(player, gameObject.transform);
 
         // Set score to 0

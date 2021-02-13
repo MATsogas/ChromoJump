@@ -19,7 +19,7 @@ public class PlayerControler : MonoBehaviour
     void Start()
     {
         playerCore = gameObject.transform.Find("Player Core").gameObject; // Find player's core (child GameObject named "Player Core")
-        CorePainter();
+        playerCore.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)); // Change core's color to a random one
         lastPlayerPosition = gameObject.transform.position;
     }
 
@@ -86,6 +86,9 @@ public class PlayerControler : MonoBehaviour
     {
         RaycastHit hit;
         if (Physics.Raycast(gameObject.transform.position, transform.forward, out hit))
+        {
+            Debug.Log(hit.collider.gameObject.name);
             playerCore.GetComponent<Renderer>().material.color = hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color");
+        }
     }
 }
