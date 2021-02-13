@@ -44,6 +44,9 @@ public class MenuSceneController : MonoBehaviour
     {
         tutorialMenu.SetActive(true);
         mainMenu.SetActive(false);
+        // Reset Nav buttons
+        nextPageButton.gameObject.SetActive(true);
+        previousPageButton.gameObject.SetActive(false);
     }
 
     // Show Credits
