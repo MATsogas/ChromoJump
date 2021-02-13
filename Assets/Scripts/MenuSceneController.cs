@@ -12,6 +12,7 @@ public class MenuSceneController : MonoBehaviour
 
     public GameObject mainMenu;
     public GameObject tutorialMenu;
+    public GameObject creditsMenu;
 
     private GameObject pages;
     private Button nextPageButton;
@@ -30,6 +31,10 @@ public class MenuSceneController : MonoBehaviour
         previousPageButton = tutorialMenu.transform.Find("Previous Button").gameObject.GetComponent<Button>();
     }
 
+    // ---- Button OnClick Functions ----
+
+    // -------- MAIN MENU --------
+
     // Start Game
     public void PlayGame()
     {
@@ -43,11 +48,11 @@ public class MenuSceneController : MonoBehaviour
         mainMenu.SetActive(false);
     }
 
-    // Go Back to Main Menu
-    public void BackToMainMenu()
+    // Show Credits
+    public void ShowCredits()
     {
-        mainMenu.SetActive(true);
-        tutorialMenu.SetActive(false);
+        creditsMenu.SetActive(true);
+        mainMenu.SetActive(false);
     }
 
     // Close Application
@@ -55,6 +60,15 @@ public class MenuSceneController : MonoBehaviour
     {
         //UnityEditor.EditorApplication.isPlaying = false; // Stops app from running in the editor
         Application.Quit();
+    }
+
+    // ---------- TUTORIAL ----------
+
+    // Go Back to Main Menu
+    public void BackToMainMenuTutorial()
+    {
+        mainMenu.SetActive(true);
+        tutorialMenu.SetActive(false);
     }
 
     // Switch to next tutorial page
@@ -69,5 +83,26 @@ public class MenuSceneController : MonoBehaviour
     {
         nextPageButton.gameObject.SetActive(true);
         previousPageButton.gameObject.SetActive(pages.GetComponent<PageHandler>().PreviousPage());
+    }
+
+    // ---------- CREDITS ----------
+
+    // Go Back to Main Menu
+    public void BackToMainMenuCredits()
+    {
+        mainMenu.SetActive(true);
+        creditsMenu.SetActive(false);
+    }
+
+    // Open Song Link on System's Default Browser
+    public void OpenSongLink()
+    {
+        Application.OpenURL("https://incompetech.filmmusic.io/song/3953-killing-time");
+    }
+
+    // Open Song License Link on System's Default Browser
+    public void OpenLicenseLink()
+    {
+        Application.OpenURL("https://filmmusic.io/standard-license");
     }
 }
