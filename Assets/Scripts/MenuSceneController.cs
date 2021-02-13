@@ -14,7 +14,6 @@ public class MenuSceneController : MonoBehaviour
     public GameObject tutorialMenu;
     public GameObject creditsMenu;
 
-    private GameObject pages;
     private Button nextPageButton;
     private Button previousPageButton;
 
@@ -25,8 +24,7 @@ public class MenuSceneController : MonoBehaviour
         if (highScoreValue > 0)
             highScoreText.text = "High Score: " + highScoreValue;
 
-        // Initialise Pages
-        pages = tutorialMenu.transform.Find("Pages").gameObject;
+        // Initialise Tutorial Navigation Buttons
         nextPageButton = tutorialMenu.transform.Find("Next Button").gameObject.GetComponent<Button>();
         previousPageButton = tutorialMenu.transform.Find("Previous Button").gameObject.GetComponent<Button>();
     }
@@ -75,14 +73,14 @@ public class MenuSceneController : MonoBehaviour
     public void NextPageTutorial()
     {
         previousPageButton.gameObject.SetActive(true);
-        nextPageButton.gameObject.SetActive(pages.GetComponent<PageHandler>().NextPage());
+        nextPageButton.gameObject.SetActive(tutorialMenu.GetComponent<PageHandler>().NextPage());
     }
 
     // Switch to previous tutorial page
     public void PreviousPageTutorial ()
     {
         nextPageButton.gameObject.SetActive(true);
-        previousPageButton.gameObject.SetActive(pages.GetComponent<PageHandler>().PreviousPage());
+        previousPageButton.gameObject.SetActive(tutorialMenu.GetComponent<PageHandler>().PreviousPage());
     }
 
     // ---------- CREDITS ----------
