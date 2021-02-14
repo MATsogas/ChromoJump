@@ -7,8 +7,9 @@ public class PlayerControler : MonoBehaviour
 {
     public float playerSpeed = 10;
     public float playerRotateSpeed = 50;
-    
+
     private GameObject playerCore;
+    private AudioSource spaceshipLandedSFX;
 
     private Queue<GameObject> movementQueue = new Queue<GameObject>(); // In case the user clicks on another tile before the player lands
     private GameObject tileToMoveTo;
@@ -20,6 +21,9 @@ public class PlayerControler : MonoBehaviour
     {
         playerCore = gameObject.transform.Find("Player Core").gameObject; // Find player's core (child GameObject named "Player Core")
         playerCore.GetComponent<Renderer>().material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)); // Change core's color to a random one
+
+        spaceshipLandedSFX = gameObject.transform.Find("Player Landed SFX").gameObject.GetComponent<AudioSource>();
+
         lastPlayerPosition = gameObject.transform.position;
     }
 
@@ -64,6 +68,10 @@ public class PlayerControler : MonoBehaviour
                 gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, tileToMoveTo.transform.position, step);
             } else // Player landed on tile
             {
+                // Play sound effect on random pitch
+                spaceshipLandedSFX.pitch = Random.Range(0.8f, 1.2f);
+                spaceshipLandedSFX.Play(); 
+
                 // Find the colors of the player's core and the tile we landed on
                 Color tileLandedColor = tileToMoveTo.GetComponent<Renderer>().material.GetColor("_Color");
                 Color playerCoreColor = playerCore.GetComponent<Renderer>().material.GetColor("_Color");
@@ -79,16 +87,5 @@ public class PlayerControler : MonoBehaviour
         }
 
         lastPlayerPosition = gameObject.transform.position;
-    }
-
-    // Function that changes the color of the player's core to what tile they're "standing" on
-    void CorePainter()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(gameObject.transform.position, transform.forward, out hit))
-        {
-            Debug.Log(hit.collider.gameObject.name);
-            playerCore.GetComponent<Renderer>().material.color = hit.collider.gameObject.GetComponent<Renderer>().material.GetColor("_Color");
-        }
     }
 }
